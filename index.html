@@ -3,94 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Font Size Calculator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Golden Ratio Font Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            background-color: #121212;
-            color: #ffffff;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
         }
+
         .container {
-            width: 90%;
-            max-width: 500px;
-            margin: auto;
-            padding: 20px;
-            background: #1e1e1e;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            background: #111111;
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.6s ease-out;
         }
-        input, button {
-            padding: 12px;
-            margin: 10px;
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .input-label {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            pointer-events: none;
+            transition: all 0.3s ease;
             font-size: 16px;
-            border-radius: 5px;
-            border: none;
-            width: calc(100% - 24px);
         }
+
         input {
-            background: #333;
-            color: #fff;
+            width: 100%;
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
             outline: none;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
+
+        input:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
         button {
-            background: #ff9800;
-            color: white;
-            cursor: pointer;
+            flex: 1;
+            padding: 18px 25px;
+            font-size: 16px;
             font-weight: 600;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        button:hover {
-            background: #e68900;
+
+        .btn-calculate {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .btn-calculate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-export {
+            background: transparent;
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-export:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-export:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
         .result {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result h3 {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .result h4 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin: 20px 0 15px 0;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .result ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .result li {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 20px;
+            margin: 8px 0;
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            border-left: 3px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .result li:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(5px);
+            border-left-color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .export-info {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
             margin-top: 20px;
-            text-align: left;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
         }
-        @media (max-width: 600px) {
+
+        .export-info.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
             .container {
-                width: 95%;
-                padding: 15px;
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                margin-bottom: 10px;
             }
         }
-        @media (min-width: 768px) {
-            .container {
-                max-width: 600px;
-                padding: 30px;
-            }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Golden Ratio Font Size Calculator</h2>  
-        <input type="number" id="fontSizeInput" placeholder="Masukkan Font Size Default">
-        <button onclick="calculateFontSizes()">Hitung</button>
+        <h1>Golden Ratio</h1>
+        <p class="subtitle">Font Size Calculator</p>
+        
+        <div class="input-group">
+            <input type="number" id="fontSizeInput" placeholder="Masukkan Font Size Default (px)" step="0.01" min="1">
+        </div>
+        
+        <div class="button-group">
+            <button class="btn-calculate" onclick="calculateFontSizes()">
+                🔢 Hitung Font Sizes
+            </button>
+            <button class="btn-export" id="exportBtn" onclick="exportToTxt()" disabled>
+                📄 Export ke TXT
+            </button>
+        </div>
+        
         <div class="result" id="output"></div>
+        <div class="export-info" id="exportInfo"></div>
     </div>
+
     <script>
+        let calculatedData = null;
+
+        // Allow Enter key to trigger calculation
+        document.getElementById('fontSizeInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculateFontSizes();
+            }
+        });
+
+        // Auto-calculate when input changes (with debounce)
+        let debounceTimer;
+        document.getElementById('fontSizeInput').addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                if (this.value) {
+                    calculateFontSizes();
+                }
+            }, 500);
+        });
+
         function calculateFontSizes() {
             let fontSizeDefault = parseFloat(document.getElementById('fontSizeInput').value);
+            
             if (isNaN(fontSizeDefault) || fontSizeDefault <= 0) {
-                alert("Masukkan angka yang valid!");
+                showError("Masukkan angka yang valid!");
                 return;
             }
-            let output = `<h3>Font Size Default: ${fontSizeDefault}px</h3>`;
-            output += "<h4>Ukuran di Bawah Default:</h4><ul>";
-            for (let i = 1; i <= 10; i++) {
-                output += `<li>Font size ke-${i}: ${(fontSizeDefault / (1.618 ** i)).toFixed(2)}px</li>`;
-            }
-            output += "</ul>";
 
-            output += "<h4>Ukuran di Atas Default:</h4><ul>";
-            for (let i = 1; i <= 10; i++) {
-                output += `<li>Font size ke-${i}: ${(fontSizeDefault * (1.618 ** i)).toFixed(2)}px</li>`;
-            }
-            output += "</ul>";
+            // Store calculated data for export
+            calculatedData = {
+                default: fontSizeDefault,
+                below: [],
+                above: []
+            };
 
-            document.getElementById('output').innerHTML = output;
+            // Calculate sizes below default
+            for (let i = 1; i <= 10; i++) {
+                calculatedData.below.push({
+                    level: i,
+                    size: parseFloat((fontSizeDefault / (1.618 ** i)).toFixed(2))
+                });
+            }
+
+            // Calculate sizes above default
+            for (let i = 1; i <= 10; i++) {
+                calculatedData.above.push({
+                    level: i,
+                    size: parseFloat((fontSizeDefault * (1.618 ** i)).toFixed(2))
+                });
+            }
+
+            displayResults();
+            document.getElementById('exportBtn').disabled = false;
         }
+
+        function displayResults() {
+            let output = `<h3>🎯 Font Size Default: ${calculatedData.default}px</h3>`;
+            
+            output += "<h4>📉 Ukuran di Bawah Default:</h4><ul>";
+            calculatedData.below.forEach(item => {
+                output += `<li>Font size ke-${item.level}: ${item.size}px</li>`;
+            });
+            output += "</ul>";
+
+            output += "<h4>📈 Ukuran di Atas Default:</h4><ul>";
+            calculatedData.above.forEach(item => {
+                output += `<li>Font size ke-${item.level}: ${item.size}px</li>`;
+            });
+            output += "</ul>";
+
+            const resultDiv = document.getElementById('output');
+            resultDiv.innerHTML = output;
+            resultDiv.classList.add('show');
+        }
+
+        function exportToTxt() {
+            if (!calculatedData) {
+                showError("Tidak ada data untuk diekspor!");
+                return;
+            }
+
+            let txtContent = `Golden Ratio Font Size Calculator\n`;
+            txtContent += `=====================================\n\n`;
+            txtContent += `Size Asli: ${calculatedData.default}px\n\n`;
+            
+            txtContent += `Ukuran di Bawah Default:\n`;
+            calculatedData.below.forEach(item => {
+                txtContent += `* Font size ke-${item.level}: ${item.size}px\n`;
+            });
+            
+            txtContent += `\nUkuran di Atas Default:\n`;
+            calculatedData.above.forEach(item => {
+                txtContent += `* Font size ke-${item.level}: ${item.size}px\n`;
+            });
+
+            txtContent += `\n\n=====================================\n`;
+            txtContent += `Generated by Golden Ratio Font Calculator\n`;
+            txtContent += `Date: ${new Date().toLocaleDateString('id-ID')}\n`;
+
+            // Create and download file
+            const blob = new Blob([txtContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `font-sizes-${calculatedData.default}px.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+
+            // Show success message
+            showExportSuccess();
+        }
+
+        function showError(message) {
+            const exportInfo = document.getElementById('exportInfo');
+            exportInfo.innerHTML = `❌ ${message}`;
+            exportInfo.style.background = 'rgba(255, 255, 255, 0.05)';
+            exportInfo.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            exportInfo.style.color = 'rgba(255, 255, 255, 0.9)';
+            exportInfo.classList.add('show');
+            
+            setTimeout(() => {
+                exportInfo.classList.remove('show');
+            }, 3000);
+        }
+
+        function showExportSuccess() {
+            const exportInfo = document.getElementById('exportInfo');
+            exportInfo.innerHTML = `✅ File berhasil diunduh! Cek folder Downloads Anda.`;
+            exportInfo.style.background = 'rgba(255, 255, 255, 0.05)';
+            exportInfo.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            exportInfo.style.color = 'rgba(255, 255, 255, 0.9)';
+            exportInfo.classList.add('show');
+            
+            setTimeout(() => {
+                exportInfo.classList.remove('show');
+            }, 4000);
+        }
+
+        // Auto-focus input on page load
+        window.addEventListener('load', () => {
+            document.getElementById('fontSizeInput').focus();
+        });
     </script>
 </body>
 </html>
